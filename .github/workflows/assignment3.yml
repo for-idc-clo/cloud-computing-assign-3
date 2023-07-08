@@ -43,7 +43,9 @@ jobs:
           path: /tmp
 
       - name: Docker load
-        run: docker load -i /tmp/docker-image.tar
+        run: |
+          ls -l /tmp
+          docker load -i /tmp/docker-image.tar
 
       - name: Run the service in a Docker container
         run: |
