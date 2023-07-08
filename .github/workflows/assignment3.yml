@@ -54,7 +54,7 @@ jobs:
           docker exec -t my-container pytest -v tests/assn3_test.py > assn3_test_results.txt && echo "tests succeeded" >> log.txt || echo "tests failed" >> log.txt
 
       - name: Archive test artifacts
-        uses: actions/upload-artifact@3
+        uses: actions/upload-artifact@v3
         with:
           name: test-artifacts
           path: |
