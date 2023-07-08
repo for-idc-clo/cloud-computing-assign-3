@@ -83,7 +83,7 @@ jobs:
       - name: Issue requests and save the results
         run: |
           while read -r food_item; do
-              curl -L -X POST -H "Content-Type: application/json" http://localhost:8000/dishes -d '{"name": "$food_item"}'
+              curl -L -X POST -H "Content-Type: application/json" http://localhost:8000/dishes -d '{"name": "'$food_item'"}'
               calories=$(curl http://localhost:8000/dishes/$food_item | jq -r '.cal')
               sodium=$(curl http://localhost:8000/dishes/$food_item | jq -r '.sodium')
               sugar=$(curl http://localhost:8000/dishes/$food_item | jq -r '.sugar')
