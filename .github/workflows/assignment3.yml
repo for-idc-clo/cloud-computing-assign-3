@@ -51,7 +51,7 @@ jobs:
 
       - name: Run Pytest
         run: |
-          docker exec -t my-container pytest -v tests/assn3_test.py > assn3_test_results.txt && echo "tests succeeded" >> log.txt || echo "tests failed" >> log.txt
+          docker exec -t my-container pytest -v tests/assn3_tests.py > assn3_test_results.txt && echo "tests succeeded" >> log.txt || echo "tests failed" >> log.txt
 
       - name: Archive test artifacts
         uses: actions/upload-artifact@v3
@@ -83,11 +83,10 @@ jobs:
       - name: Issue requests and save the results
         run: |
           while read -r food_item; do
-              jq
-              curl -s -X POST http://localhost:8000/dishes -d "name=$food_item"
-              calories=$(curl -s -X POST http://localhost:8000/dishes -d "name=$food_item" | jq -r '.calories')
-              sodium=$(curl -s -X GET http://localhost:8000/dishes/$food_item | jq -r '.sodium')
-              sugar=$(curl -s -X GET http://localhost:8000/dishes/$food_item | jq -r '.sugar')
+              curl -L -X POST -H "Content-Type: application/json" http://localhost:8000/dishes -d '{"name": "$food_item"}'
+              calories=$(curl http://localhost:8000/dishes/$food_item | jq -r '.cal')
+              sodium=$(curl http://localhost:8000/dishes/$food_item | jq -r '.sodium')
+              sugar=$(curl http://localhost:8000/dishes/$food_item | jq -r '.sugar')
               
               echo "$food_item contains $calories calories, $sodium mgs of sodium, and $sugar grams of sugar" >> response.txt
           done < query.txt
