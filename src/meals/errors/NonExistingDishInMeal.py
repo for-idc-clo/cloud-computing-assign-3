@@ -1,0 +1,2 @@
+class NonExistingDishInMeal(Exception):
+    pass

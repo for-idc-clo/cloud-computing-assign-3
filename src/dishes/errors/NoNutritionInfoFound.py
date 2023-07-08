@@ -1,0 +1,2 @@
+class NoNutritionInfoFound(Exception):
+    pass
