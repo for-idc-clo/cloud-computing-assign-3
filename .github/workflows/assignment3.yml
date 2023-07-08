@@ -19,7 +19,7 @@ jobs:
           docker build . --file Dockerfile --tag my-image:latest && echo "Image successfully built" >> log.txt || echo "Image not able to be built" >> log.txt
 
       - name: Docker save
-        run: docker save -o /tmp/docker-image.tar my-image:latest
+        run: docker save -o docker-image.tar my-image:latest
 
       - name: Archive Docker image and log file
         uses: actions/upload-artifact@v3
