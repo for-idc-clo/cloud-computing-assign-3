@@ -44,7 +44,11 @@ jobs:
 
       - name: Docker load
         run: |
+          echo "in tmp"
           ls -l /tmp
+          echo "in current dir"
+          ls -l .
+          pwd
           docker load -i /tmp/docker-image.tar
 
       - name: Run the service in a Docker container
