@@ -47,7 +47,7 @@ jobs:
 
       - name: Run the service in a Docker container
         run: |
-          docker run -d --name my-container my-image:latest && echo "Container up and running" >> log.txt || echo "Container failed to run" >> log.txt
+          docker run -p 8000:8000 -d --name my-container my-image:latest && echo "Container up and running" >> log.txt || echo "Container failed to run" >> log.txt
 
       - name: Run Pytest
         run: |
@@ -78,7 +78,7 @@ jobs:
         run: docker load -i docker-image.tar
 
       - name: Run the service in a Docker container
-        run: docker run -d --name my-container my-image:latest
+        run: docker run -p 8000:8000 -d --name my-container my-image:latest
 
       - name: Issue requests and save the results
         run: |
