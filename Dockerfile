@@ -6,6 +6,7 @@ RUN pip install --upgrade pip && \
     pip install -r /requirements.txt
 
 COPY ./src /app
+COPY ./tests /app/tests
 
 EXPOSE 8000
 

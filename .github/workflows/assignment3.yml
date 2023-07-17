@@ -58,7 +58,6 @@ jobs:
         with:
           name: test-artifacts
           path: |
-            docker-image.tar
             assn3_test_results.txt
             log.txt
 
@@ -69,7 +68,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Download Docker image, log file and pytest results
+      - name: Download log file and pytest results
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
+      - name: Download log file and pytest results
         uses: actions/download-artifact@v3
         with:
           name: test-artifacts
@@ -77,11 +81,9 @@ jobs:
       - name: Docker load
         run: docker load -i docker-image.tar
 
-      - name: Run the service in a Docker container
-        run: docker run -p 8000:8000 -d --name my-container my-image:latest
-
       - name: Issue requests and save the results
         run: |
+          docker run -p 8000:8000 -d --name my-container my-image:latest
           while read -r food_item; do
               curl -L -X POST -H "Content-Type: application/json" http://localhost:8000/dishes -d '{"name": "'$food_item'"}'
               calories=$(curl http://localhost:8000/dishes/$food_item | jq -r '.cal')
